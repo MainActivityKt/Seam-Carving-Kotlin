@@ -19,7 +19,6 @@ Example
     Enter output image name:
     > out.png
 
-    out.png should look like this:
-
+out.png looks like this:
 ![produced image](src/drawable/rect.png)
 
