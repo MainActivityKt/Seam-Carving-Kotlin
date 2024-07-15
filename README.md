@@ -20,5 +20,6 @@ Example
     > out.png
 
 out.png looks like this:
+
 ![produced image](src/drawable/rect.png)
 
