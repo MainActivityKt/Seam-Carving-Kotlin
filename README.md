@@ -36,7 +36,7 @@ Inverted color for `(r, g, b)` is `(255 - r, 255 - g, 255 - b)`
 
 Stage implementation:  [ColorInverter.kt](src/main/kotlin/seamcarving/ColorInverter.kt)
 
-Args: `-in path\imageName.png -out outputPath_outputName.png`
+Args: `-in inputPath\imageName.png -out outputPath\outputImageName.png`
 
 Example:
 
