@@ -9,7 +9,7 @@ import javax.imageio.ImageIO
 class RectangleBuilder {
     private var width: Int = 0
     private var height: Int = 0
-    lateinit var image: BufferedImage
+    private lateinit var image: BufferedImage
 
     fun getDetails() {
         println(Prompt.ENTER_WIDTH.text)
@@ -33,7 +33,7 @@ class RectangleBuilder {
     fun saveImage() {
         println(Prompt.ENTER_NAME.text)
         val name = readln()
-        val outputFile = File("C:\\Users\\Safiu\\Desktop\\Temporary Files\\$name")
+        val outputFile = File(name)
         ImageIO.write(image, "png", outputFile)
     }
 }
