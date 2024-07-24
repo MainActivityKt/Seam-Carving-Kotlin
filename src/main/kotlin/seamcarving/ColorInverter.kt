@@ -1,21 +1,16 @@
 package org.example.seamcarving
 
+import org.example.utils.Utils.openImage
+import org.example.utils.Utils.saveImage
 import org.example.utils.extractArgs
 import java.awt.Color
 import java.awt.image.BufferedImage
-import java.io.File
-import javax.imageio.ImageIO
 
 class ColorInverter(inputPath: String) {
     private lateinit var inputImage: BufferedImage
 
     init {
-        openImage(inputPath)
-    }
-
-    private fun openImage(inputPath: String) {
-        println(inputPath)
-       inputImage = ImageIO.read(File(inputPath))
+        inputImage = openImage(inputPath)
     }
 
     fun convertImage() {
@@ -28,9 +23,8 @@ class ColorInverter(inputPath: String) {
         }
     }
 
-    fun saveImage(outputPath: String) {
-        val outputDir = File(outputPath)
-        ImageIO.write(inputImage, "png", outputDir)
+    fun save(path: String) {
+        saveImage(path, inputImage)
     }
 
     private fun invertRgb(rgb: Color): Color {
@@ -40,7 +34,7 @@ class ColorInverter(inputPath: String) {
 
 fun main(args: Array<String>) {
     val arguments = args.joinToString().extractArgs()
-    val inverter = ColorInverter(arguments.first)
-    inverter.convertImage()
-    inverter.saveImage(arguments.second)
+    val colorInverter = ColorInverter(arguments.first)
+    colorInverter.convertImage()
+    colorInverter.save(arguments.second)
 }

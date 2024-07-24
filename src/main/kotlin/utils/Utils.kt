@@ -1,5 +1,9 @@
 package org.example.utils
 
+import java.awt.image.BufferedImage
+import java.io.File
+import javax.imageio.ImageIO
+
 enum class Prompt(val text: String) {
     ENTER_WIDTH("Enter rectangle width:"),
     ENTER_HEIGHT("Enter rectangle height:"),
@@ -9,4 +13,10 @@ enum class Prompt(val text: String) {
 fun String.extractArgs(): Pair<String, String> {
     val args = Regex("\\w+-?\\w+.png").findAll(this)
     return args.first().value to args.last().value
+}
+
+object Utils {
+    val openImage = { inputPath: String -> ImageIO.read(File(inputPath)) }
+    val saveImage = { outputPath: String, image: BufferedImage -> ImageIO.write(image, "png", File(outputPath)) }
+
 }
