@@ -46,7 +46,7 @@ Example:
 > 
 > ![sky image](src/drawable/sky.png)
 > 
-> sky-negative.png looks like:
+> Outputs the follwoing sky-negative.png:
 > 
 > ![inverted sky image](src/drawable/sky_negative.png)
 
@@ -66,12 +66,12 @@ Stage implementation: [EnergyCalculator.kt](src/main/kotlin/seamcarving/EnergyCa
 
 Example:
 
->-in sky.png -out sky-energy.png
+>args: -in sky.png -out sky-energy.png
 > 
 > For the following sky.png:
 > 
 > ![sky image](src/drawable/sky.png)
 > 
-> sky-energy.png looks like:
+> Outputs the following sky-energy.png:
 > 
 > ![converted sky image](src/drawable/sky-energy.png)
