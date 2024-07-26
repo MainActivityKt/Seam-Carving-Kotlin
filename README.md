@@ -50,7 +50,7 @@ Example:
 > 
 > ![inverted sky image](src/drawable/sky_negative.png)
 
-Stage 3/6: Look at energy:
+## Stage 3/6: Look at energy:
 
 In this stage, the energy for each pixel is calculated using the **dual-gradient energy function.**
 
