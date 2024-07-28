@@ -7,13 +7,13 @@ import java.awt.Color
 import java.awt.image.BufferedImage
 import kotlin.math.sqrt
 
-class SeamHighlighter(inputPath: String) {
-    private val inputImage: BufferedImage
-    private var energies: MutableList<MutableList<Double>>
+open class SeamHighlighter(inputPath: String) {
+    protected val inputImage: BufferedImage
+    protected var energies: MutableList<MutableList<Double>>
+    protected var path = mutableListOf<Pixel>()
+    protected val height: Int
+    protected val width: Int
     private var cumulativeEnergies: MutableList<MutableList<Double>>
-    private var path = mutableListOf<Pixel>()
-    private val height: Int
-    private val width: Int
 
     init {
         inputImage = openImage(inputPath)
@@ -69,7 +69,7 @@ class SeamHighlighter(inputPath: String) {
      * Calculates the cumulative energy of each pixel, and adds that energy to cumulativeEnergies 2D array for that pixel
      * @see calculateEnergies
      */
-    fun calculateCumulativeEnergies() {
+    open fun calculateCumulativeEnergies() {
         for (y in 0 until height) {
             for (x in 0 until width) {
                 if (y == 0) {
@@ -88,7 +88,7 @@ class SeamHighlighter(inputPath: String) {
      * Marks the pixel with the lowest cumulative energy value from the bottom row as the starting point of seam path and
      * updates the path variable using getPath() function
      */
-    fun findLowestSeam() {
+    open fun findLowestSeam() {
         val x = cumulativeEnergies[height - 1].indexOf(cumulativeEnergies[height - 1].min())
         path = getPath(x, height - 1)
     }
@@ -98,7 +98,7 @@ class SeamHighlighter(inputPath: String) {
 
     Returns the list of chosen pixels
      */
-    private fun getPath(startX: Int, startY: Int): MutableList<Pixel> {
+    open fun getPath(startX: Int, startY: Int): MutableList<Pixel> {
         var currentPixel = Pixel(startX, startY)
         val path = mutableListOf(currentPixel)
         for (y in height - 1 downTo 1) {
@@ -113,7 +113,7 @@ class SeamHighlighter(inputPath: String) {
      * cumulative energies, and returns the Pixel of that pixel
      * @see Pixel
      */
-    private fun getNextPixel(x: Int, y: Int): Pixel {
+    protected open fun getNextPixel(x: Int, y: Int): Pixel {
         val top = Pixel(x, y - 1, cumulativeEnergies[y - 1][x])
         val topLeft = if (x > 0) Pixel(x - 1, y - 1, cumulativeEnergies[y - 1][x - 1]) else top
         val topRight = if (x < width - 1) Pixel(x + 1, y - 1, cumulativeEnergies[y - 1][x + 1]) else top
@@ -133,11 +133,10 @@ class SeamHighlighter(inputPath: String) {
 
 
 fun main(args: Array<String>) {
-    val arguments = args.joinToString().extractArgs()
-    val seamHighlighter = SeamHighlighter(arguments.first)
+    val seamHighlighter = SeamHighlighter(args[1])
     seamHighlighter.calculateEnergies()
     seamHighlighter.calculateCumulativeEnergies()
     seamHighlighter.findLowestSeam()
     seamHighlighter.colorizeSeam(Color.RED)
-    seamHighlighter.save(arguments.second)
+    seamHighlighter.save(args.last())
 }
