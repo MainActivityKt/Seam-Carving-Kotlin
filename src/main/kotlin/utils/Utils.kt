@@ -14,7 +14,7 @@ enum class GRADIENT {
     X_GRADIENT, Y_GRADIENT
 }
 
-data class Pixel(val x: Int, val y: Int) {
+data class Pixel(val x: Int, val y: Int, val energy: Double = 0.0) {
     override fun toString(): String {
         return "x: $x, y: $y"
     }

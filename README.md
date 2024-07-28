@@ -75,3 +75,40 @@ Example:
 > Outputs the following sky-energy.png:
 > 
 > ![converted sky image](src/drawable/sky-energy.png)
+
+## Stage 4/6: Find the seam
+
+Vertical seam is a sequence of adjacent pixels crossing the image top to bottom. 
+The seam can have only one pixel in each row of the image. 
+
+For example, subsequent pixels for pixel `(x,y)`are `(x - 1, y + 1)`, `(x. y + 1)`, and `(x + 1, y + 1)`.
+
+The best seam to remove is the seam with the lowest sum of pixel energies from all possible seams. 
+The problem of finding the best seam is very similar to finding the shortest path in a graph.
+
+
+ **In this stage,**
+
+1. The energies for each pixel are calculated, based on the implementation of stage 3.
+
+2. Cumulative energies(lowest sum of possible energies) is calculated as well, which, for each pixel in a row is the
+energy of the current pixel plus the energy of one of the three possible pixels above it.
+
+3. The vertical seam with the minimal seam energy is found. 
+4. The found seam is colorized with the color red.
+
+[Open stage 4 on Hyperskill](https://hyperskill.org/projects/100/stages/553/implement)
+
+Stage implementation: [EnergyCalculator.kt](src/main/kotlin/seamcarving/SeamHighlighter.kt)
+
+Example:
+
+> args: -in sky.png -out sky-seam.png
+>
+> For the following sky.png:
+>
+> ![sky image](src/drawable/sky.png)
+>
+> Outputs the following sky-seam.png:
+>
+> ![converted sky image](src/drawable/sky-seam.png)
