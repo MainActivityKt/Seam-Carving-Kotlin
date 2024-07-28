@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage
 import kotlin.math.sqrt
 
 class EnergyCalculator(inputPath: String) {
-    private lateinit var inputImage: BufferedImage
+    private val inputImage: BufferedImage
     private var energies: MutableList<MutableList<Double>>
 
     init {

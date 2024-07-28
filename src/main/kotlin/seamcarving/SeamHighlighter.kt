@@ -19,10 +19,14 @@ class SeamHighlighter(inputPath: String) {
         inputImage = openImage(inputPath)
         height = inputImage.height
         width = inputImage.width
-        energies = MutableList(width) { MutableList(height) { 0.0 } }
-        cumulativeEnergies = MutableList(height) { MutableList(width) { 0.0 } }
+        energies = MutableList(width) { MutableList(height) { 0.0 } }             // initialize list of pixel energies
+        cumulativeEnergies = MutableList(height) { MutableList(width) { 0.0 } }  // initialize list of cumulative energies
     }
 
+    /**
+     * Calculates the energy of each pixel, and adds that energy to the energies 2D array, for that pixel
+     * @see calculatePixelEnergy
+     */
     fun calculateEnergies() {
         for (x in 0 until width) {
             for (y in 0 until height) {
@@ -61,46 +65,59 @@ class SeamHighlighter(inputPath: String) {
         return redDiff.squared() + greenDiff.squared() + blueDiff.squared()
     }
 
+    /**
+     * Calculates the cumulative energy of each pixel, and adds that energy to cumulativeEnergies 2D array for that pixel
+     * @see calculateEnergies
+     */
     fun calculateCumulativeEnergies() {
         for (y in 0 until height) {
             for (x in 0 until width) {
                 if (y == 0) {
-                    // first has no row above it, so will be initialized with energy data
+                    // The top row has nothing above it, so the energies are the same as the source image
                     cumulativeEnergies[y][x] = energies[x][y]
                 } else {
-                    cumulativeEnergies[y][x] = energies[x][y] + getMinEnergy(x, y)
+                    // For each pixel in the rest of the rows,
+                    // the energy is its own energy plus the minimal of the three energies above.
+                    cumulativeEnergies[y][x] = energies[x][y] + getNextPixel(x, y).energy
                 }
             }
         }
     }
 
+    /**
+     * Marks the pixel with the lowest cumulative energy value from the bottom row as the starting point of seam path and
+     * updates the path variable using getPath() function
+     */
     fun findLowestSeam() {
         val x = cumulativeEnergies[height - 1].indexOf(cumulativeEnergies[height - 1].min())
         path = getPath(x, height - 1)
     }
 
+    /**
+    Takes the coordinates [x, y] of the starting pixel, and follows the path always choosing the minimum of top three pixels.
+
+    Returns the list of chosen pixels
+     */
     private fun getPath(startX: Int, startY: Int): MutableList<Pixel> {
         var currentPixel = Pixel(startX, startY)
         val path = mutableListOf(currentPixel)
         for (y in height - 1 downTo 1) {
-            currentPixel = findNextBestPixel(Pixel(currentPixel.x, currentPixel.y))
+            currentPixel = getNextPixel(currentPixel.x, currentPixel.y)
             path.add(currentPixel)
         }
         return path
     }
 
-    private fun findNextBestPixel(pixel: Pixel): Pixel {
-        val top = Pixel(pixel.x, pixel.y - 1) to cumulativeEnergies[pixel.y - 1][pixel.x]
-        val topLeft = if (pixel.x > 0) Pixel(pixel.x - 1, pixel.y - 1) to cumulativeEnergies[pixel.y - 1][pixel.x - 1] else top
-        val topRight = if (pixel.x < width - 1) Pixel(pixel.x + 1, pixel.y - 1) to cumulativeEnergies[pixel.y - 1][pixel.x + 1] else top
-        return setOf(top, topLeft, topRight).minBy { it.second }.first
-    }
-
-    private fun getMinEnergy(x: Int, y: Int): Double {
-        val top = cumulativeEnergies[y - 1][x]
-        val topLeft = if (x > 0) cumulativeEnergies[y - 1][x - 1] else top
-        val topRight = if (x < width - 1) cumulativeEnergies[y - 1][x + 1] else top
-        return minOf(top, topLeft, topRight)
+    /**
+     * Takes a pixel coordinates as input, chooses the minimum of top, top left, and top right pixels based on their
+     * cumulative energies, and returns the Pixel of that pixel
+     * @see Pixel
+     */
+    private fun getNextPixel(x: Int, y: Int): Pixel {
+        val top = Pixel(x, y - 1, cumulativeEnergies[y - 1][x])
+        val topLeft = if (x > 0) Pixel(x - 1, y - 1, cumulativeEnergies[y - 1][x - 1]) else top
+        val topRight = if (x < width - 1) Pixel(x + 1, y - 1, cumulativeEnergies[y - 1][x + 1]) else top
+        return setOf(top, topLeft, topRight).minBy { it.energy }
     }
 
     fun colorizeSeam(color: Color) {
