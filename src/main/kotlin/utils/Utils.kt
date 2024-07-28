@@ -10,13 +10,24 @@ enum class Prompt(val text: String) {
     ENTER_NAME("Enter output image name:")
 }
 
+enum class GRADIENT {
+    X_GRADIENT, Y_GRADIENT
+}
+
+data class Pixel(val x: Int, val y: Int) {
+    override fun toString(): String {
+        return "x: $x, y: $y"
+    }
+}
+
 fun String.extractArgs(): Pair<String, String> {
     val args = Regex("\\w+-?\\w+.png").findAll(this)
     return args.first().value to args.last().value
 }
 
+fun Int.squared() = this * this
+
 object Utils {
     val openImage = { inputPath: String -> ImageIO.read(File(inputPath)) }
     val saveImage = { outputPath: String, image: BufferedImage -> ImageIO.write(image, "png", File(outputPath)) }
-
 }

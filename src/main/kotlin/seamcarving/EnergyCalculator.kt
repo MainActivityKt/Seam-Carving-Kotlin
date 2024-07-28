@@ -1,17 +1,14 @@
 package org.example.seamcarving
 
+import org.example.utils.GRADIENT
+import org.example.utils.Pixel
 import org.example.utils.Utils.openImage
 import org.example.utils.Utils.saveImage
 import org.example.utils.extractArgs
+import org.example.utils.squared
 import java.awt.Color
 import java.awt.image.BufferedImage
 import kotlin.math.sqrt
-
-enum class GRADIENT {
-    X_GRADIENT, Y_GRADIENT
-}
-
-data class Pixel(val x: Int, val y: Int)
 
 class EnergyCalculator(inputPath: String) {
     private lateinit var inputImage: BufferedImage
@@ -78,8 +75,6 @@ class EnergyCalculator(inputPath: String) {
         saveImage(outputPath, inputImage)
     }
 }
-
-fun Int.squared() = this * this
 
 fun main(args: Array<String>) {
     val arguments = args.joinToString().extractArgs()
