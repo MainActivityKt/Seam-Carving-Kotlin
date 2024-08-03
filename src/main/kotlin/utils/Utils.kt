@@ -28,6 +28,6 @@ fun String.extractArgs(): Pair<String, String> {
 fun Int.squared() = this * this
 
 object Utils {
-    val openImage = { inputPath: String -> ImageIO.read(File(inputPath)) }
-    val saveImage = { outputPath: String, image: BufferedImage -> ImageIO.write(image, "png", File(outputPath)) }
+    val openImage = { inputPath: String -> ImageIO.read(File("C:\\Users\\Safiu\\IdeaProjects (Kotlin)\\Seam-Carving\\src\\drawable\\$inputPath")) }
+    val saveImage = { outputPath: String, image: BufferedImage -> ImageIO.write(image, "png", File("C:\\Users\\Safiu\\IdeaProjects (Kotlin)\\Seam-Carving\\src\\drawable\\$outputPath")) }
 }

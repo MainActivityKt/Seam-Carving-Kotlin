@@ -53,7 +53,6 @@ open class SeamHighlighter(inputPath: String) {
         return getRgbDiff(prevPixel, nextPixel)
     }
 
-
     private fun getRgbDiff(prevPixel: Pixel, nextPixel: Pixel): Int {
         val prevPixelColor = Color(inputImage.getRGB(prevPixel.x, prevPixel.y))
         val nextPixelColor = Color(inputImage.getRGB(nextPixel.x, nextPixel.y))
