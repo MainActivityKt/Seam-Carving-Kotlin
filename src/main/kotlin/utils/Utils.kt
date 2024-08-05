@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 
+data class Parameters(val inputPath: String, val outputPath: String, val width: Int = 0, val height: Int = 0)
+
 enum class Prompt(val text: String) {
     ENTER_WIDTH("Enter rectangle width:"),
     ENTER_HEIGHT("Enter rectangle height:"),
@@ -18,11 +20,6 @@ data class Pixel(val x: Int, val y: Int, val energy: Double = 0.0) {
     override fun toString(): String {
         return "x: $x, y: $y"
     }
-}
-
-fun String.extractArgs(): Pair<String, String> {
-    val args = Regex("\\w+-?\\w+.png").findAll(this)
-    return args.first().value to args.last().value
 }
 
 fun Int.squared() = this * this

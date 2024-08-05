@@ -4,6 +4,7 @@ import org.example.utils.GRADIENT
 import org.example.utils.Pixel
 import org.example.utils.Utils.openImage
 import org.example.utils.Utils.saveImage
+import org.example.utils.Parameters
 import org.example.utils.squared
 import java.awt.Color
 import java.awt.image.BufferedImage
@@ -12,8 +13,6 @@ import kotlin.math.sqrt
 enum class REDUCTION {
     HORIZONTAL_REDUCTION, VERTICAL_REDUCTION
 }
-
-data class Parameters(val inputPath: String, val outputPath: String, val width: Int, val height: Int)
 
 class ImageResizer() {
 

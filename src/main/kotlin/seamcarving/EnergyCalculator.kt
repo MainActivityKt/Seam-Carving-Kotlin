@@ -4,11 +4,11 @@ import org.example.utils.GRADIENT
 import org.example.utils.Pixel
 import org.example.utils.Utils.openImage
 import org.example.utils.Utils.saveImage
-import org.example.utils.extractArgs
 import org.example.utils.squared
 import java.awt.Color
 import java.awt.image.BufferedImage
 import kotlin.math.sqrt
+import org.example.utils.Parameters
 
 class EnergyCalculator(inputPath: String) {
     private val inputImage: BufferedImage
@@ -77,8 +77,8 @@ class EnergyCalculator(inputPath: String) {
 }
 
 fun main(args: Array<String>) {
-    val arguments = args.joinToString().extractArgs()
-    val energyCalculator = EnergyCalculator(arguments.first)
+    val params = Parameters(args[1], args.last())
+    val energyCalculator = EnergyCalculator(params.inputPath)
     energyCalculator.convertImage()
-    energyCalculator.save(arguments.second)
+    energyCalculator.save(params.outputPath)
 }

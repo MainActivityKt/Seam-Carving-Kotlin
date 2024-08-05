@@ -64,10 +64,11 @@ class HorizontalSeamHighlighter(inputPath: String): SeamHighlighter(inputPath) {
 
 
 fun main(args: Array<String>) {
-    val seamHighlighter = HorizontalSeamHighlighter(args[1])
+    val params = Parameters(args[1], args.last())
+    val seamHighlighter = HorizontalSeamHighlighter(params.inputPath)
     seamHighlighter.calculateEnergies()
     seamHighlighter.calculateCumulativeEnergies()
     seamHighlighter.findLowestSeam()
     seamHighlighter.colorizeSeam(Color.RED)
-    seamHighlighter.save(args.last())
+    seamHighlighter.save(params.outputPath)
 }

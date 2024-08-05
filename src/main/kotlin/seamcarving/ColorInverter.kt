@@ -2,7 +2,7 @@ package org.example.seamcarving
 
 import org.example.utils.Utils.openImage
 import org.example.utils.Utils.saveImage
-import org.example.utils.extractArgs
+import org.example.utils.Parameters
 import java.awt.Color
 import java.awt.image.BufferedImage
 
@@ -33,8 +33,8 @@ class ColorInverter(inputPath: String) {
 }
 
 fun main(args: Array<String>) {
-    val arguments = args.joinToString().extractArgs()
-    val colorInverter = ColorInverter(arguments.first)
+    val params = Parameters(args[1], args.last())
+    val colorInverter = ColorInverter(params.inputPath)
     colorInverter.convertImage()
-    colorInverter.save(arguments.second)
+    colorInverter.save(params.outputPath)
 }
