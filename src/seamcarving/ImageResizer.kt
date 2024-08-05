@@ -1,11 +1,11 @@
-package org.example.seamcarving
+package seamcarving
 
-import org.example.utils.GRADIENT
-import org.example.utils.Pixel
-import org.example.utils.Utils.openImage
-import org.example.utils.Utils.saveImage
-import org.example.utils.Parameters
-import org.example.utils.squared
+import utils.GRADIENT
+import utils.Pixel
+import utils.Utils.openImage
+import utils.Utils.saveImage
+import utils.Parameters
+import utils.squared
 import java.awt.Color
 import java.awt.image.BufferedImage
 import kotlin.math.sqrt

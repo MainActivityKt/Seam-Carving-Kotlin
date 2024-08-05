@@ -1,6 +1,7 @@
-package org.example.seamcarving
+package seamcarving
 
-import org.example.utils.*
+import utils.Parameters
+import utils.Pixel
 import java.awt.Color
 
 class HorizontalSeamHighlighter(inputPath: String): SeamHighlighter(inputPath) {
@@ -57,7 +58,7 @@ class HorizontalSeamHighlighter(inputPath: String): SeamHighlighter(inputPath) {
     override fun getNextPixel(x: Int, y: Int): Pixel {
         val left = Pixel(x - 1, y, cumulativeEnergies[x - 1][y])
         val upperLeft = if(y > 0) Pixel(x - 1, y - 1, cumulativeEnergies[x - 1][y - 1]) else left
-        val lowerLeft = if (y < height - 1 )Pixel(x - 1, y + 1, cumulativeEnergies[x - 1][y + 1]) else left
+        val lowerLeft = if (y < height - 1 ) Pixel(x - 1, y + 1, cumulativeEnergies[x - 1][y + 1]) else left
         return setOf(left, upperLeft, lowerLeft).minBy { it.energy }
     }
 }

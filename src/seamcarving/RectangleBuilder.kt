@@ -1,6 +1,6 @@
-package org.example.seamcarving
+package seamcarving
 
-import org.example.utils.Prompt
+import utils.Prompt
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.File

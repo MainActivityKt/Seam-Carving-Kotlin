@@ -1,4 +1,4 @@
-package org.example.utils
+package utils
 
 import java.awt.image.BufferedImage
 import java.io.File

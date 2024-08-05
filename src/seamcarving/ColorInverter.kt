@@ -1,8 +1,8 @@
-package org.example.seamcarving
+package seamcarving
 
-import org.example.utils.Utils.openImage
-import org.example.utils.Utils.saveImage
-import org.example.utils.Parameters
+import utils.Utils.openImage
+import utils.Utils.saveImage
+import utils.Parameters
 import java.awt.Color
 import java.awt.image.BufferedImage
 
