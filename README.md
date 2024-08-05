@@ -8,7 +8,7 @@ on both sides.
 
 [Open stage 1 on Hyperskill](https://hyperskill.org/projects/100/stages/550/implement)
 
-Stage implementation: [RectangleBuilder.kt](src/main/kotlin/seamcarving/RectangleBuilder.kt)
+Stage implementation: [RectangleBuilder.kt](src/seamcarving/RectangleBuilder.kt)
 
 Example
 
@@ -30,11 +30,9 @@ inverting its rgb values.
 
 Inverted color for `(r, g, b)` is `(255 - r, 255 - g, 255 - b)`
 
-
-
 [Open stage 2 on Hyperskill](https://hyperskill.org/projects/100/stages/551/implement)
 
-Stage implementation:  [ColorInverter.kt](src/main/kotlin/seamcarving/ColorInverter.kt)
+Stage implementation:  [ColorInverter.kt](src/seamcarving/ColorInverter.kt)
 
 Args: `-in inputPath\imageName.png -out outputPath\outputImageName.png`
 
@@ -46,7 +44,7 @@ Example:
 > 
 > ![sky image](src/drawable/sky.png)
 > 
-> Outputs the follwoing sky-negative.png:
+> Outputs the following sky-negative.png:
 > 
 > ![inverted sky image](src/drawable/sky_negative.png)
 
@@ -62,7 +60,7 @@ And each pixel's rgb values are set to the `intensity` value, so the energy is r
 
 [Open stage 3 on Hyperskill](https://hyperskill.org/projects/100/stages/552/implement)
 
-Stage implementation: [EnergyCalculator.kt](src/main/kotlin/seamcarving/EnergyCalculator.kt)
+Stage implementation: [EnergyCalculator.kt](src/seamcarving/EnergyCalculator.kt)
 
 Example:
 
@@ -99,7 +97,7 @@ energy of the current pixel plus the energy of one of the three possible pixels 
 
 [Open stage 4 on Hyperskill](https://hyperskill.org/projects/100/stages/553/implement)
 
-Stage implementation: [EnergyCalculator.kt](src/main/kotlin/seamcarving/SeamHighlighter.kt)
+Stage implementation: [SeamHighlighter.kt](src/seamcarving/SeamHighlighter.kt)
 
 Example:
 
@@ -112,3 +110,60 @@ Example:
 > Outputs the following sky-seam.png:
 >
 > ![converted sky image](src/drawable/sky-seam.png)
+
+
+## Stage 5/6: Horizontal seam
+In this stage, the horizontal seam for the given input image is found and is highlighted in red.
+
+There are many ways to find a horizontal seam for an image, such as using the transposed view of an image for the vertical seam.
+
+This implementation uses a different approach, inheriting and overriding the previous stage's implementation.
+
+[Open stage 5 on Hyperskill](https://hyperskill.org/projects/100/stages/554/implement)
+
+Stage implementation: [HorizontalSeamHighlighter.kt](src/seamcarving/HorizontalSeamHighlighter.kt)
+
+Example: 
+> args: -in sky.png -out sky-horizontal-seam.png
+> 
+> For the following sky.png:
+> ![sky image](src/drawable/sky.png)
+> 
+> Outputs the following sky-horizontal-seam.png:
+>
+> ![converted sky image](src/drawable/sky-horizontal-seam.png)
+
+
+## Stage 6/6: Resize
+
+In this stage:
+- Two more command line parameters are added, `-width`
+for the number of vertical seams to remove and, `-height` for the number of horizontal seams.
+- Find a vertical seam and remove all the pixels that this seam contains. Then updates the energy values, and find another vertical seam on
+the resulted image and delete all the pixels that the second seam contains, repeats the process until the specified number of vertical seams are removed.
+- Removes the horizontal seams the in same way, from the resulted image.
+- Saves the output file to the specified path
+
+[Open stage 6 on Hyperskill](https://hyperskill.org/projects/100/stages/555/implement)
+
+Stage implementation: [ImageResizer.kt](src/seamcarving/ImageResizer.kt)
+
+**Example 1:**
+> args: -in sky.png -out sky-reduced.png -width 125 -height 50
+>
+> For the following sky.png:
+> ![sky image](src/drawable/sky.png)
+>
+> Outputs the following sky-reduced.png:
+>
+> ![converted sky image](src/drawable/sky-reduced.png)
+
+**Example 2:**
+> args: -in trees.png -out trees-reduced.png -width 100 -height 30
+>
+> For the following trees.png:
+> ![trees image](src/drawable/trees.png)
+>
+> Outputs the following trees-reduced.png:
+>
+> ![converted trees image](src/drawable/trees-reduced.png)
